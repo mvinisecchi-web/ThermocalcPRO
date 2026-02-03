@@ -18,7 +18,7 @@ export const chatWithGemini = async (
   try {
     // Usando o modelo flash-latest para máxima velocidade e atualizações automáticas
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-1.5-flash-latest",
       systemInstruction: `
         Você é um especialista em climatização e ar-condicionado, atuando como o assistente virtual do "ThermoCalc Pro".
         

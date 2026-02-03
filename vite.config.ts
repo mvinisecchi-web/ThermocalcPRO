@@ -4,12 +4,10 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  // Adicione esta linha abaixo para garantir que os caminhos do CSS/JS funcionem na Vercel
-  base: '/', 
+  base: '/', // ISSO resolve o erro 404 do CSS e do Favicon
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-  // Remova o bloco 'define' antigo, pois o Vite já gerencia o VITE_GEMINI_API_KEY automaticamente
 })
