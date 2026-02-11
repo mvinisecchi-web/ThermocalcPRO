@@ -1,366 +1,239 @@
-<<<<<<< HEAD
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
+  Snowflake,
+  Zap,
+  Wind,
+  Wrench,
+  Thermometer,
+  Home,
+  BrainCircuit,
   ChevronLeft,
   ChevronRight,
-  Wind,
-  Zap,
-  ThermometerSun,
-  Wrench,
-  Info,
-  Snowflake,
-  Sparkles,
-  ShieldCheck,
-  PlugZap,
 } from "lucide-react";
 
-type Slide = {
+type TipSlide = {
   id: string;
   title: string;
   subtitle: string;
   icon: React.ReactNode;
   bullets: string[];
-  tip?: string;
+  footer?: string;
 };
 
 const AUTOPLAY_MS = 30_000;
 
-const InfoHub: React.FC = () => {
-  const slides = useMemo<Slide[]>(
+export default function InfoHub() {
+  const slides: TipSlide[] = useMemo(
     () => [
+      {
+        id: "como-funciona",
+        title: "Como funciona um ar-condicionado?",
+        subtitle: "Ele “tira calor” do ambiente e joga para fora.",
+        icon: <Snowflake className="h-5 w-5 text-blue-600" />,
+        bullets: [
+          "A unidade interna puxa o ar do cômodo e passa pelo evaporador (frio).",
+          "O refrigerante absorve o calor e leva para a unidade externa.",
+          "A condensadora libera esse calor para fora e o ciclo se repete.",
+        ],
+        footer: "Dica: portas e janelas bem vedadas melhoram MUITO o desempenho.",
+      },
       {
         id: "btu",
         title: "O que é BTU?",
-        subtitle: "A medida que define a potência ideal para o seu ambiente.",
-        icon: <ThermometerSun className="h-5 w-5" />,
+        subtitle: "É a “potência térmica” que o ar precisa para resfriar bem.",
+        icon: <Thermometer className="h-5 w-5 text-indigo-600" />,
         bullets: [
-          "BTU/h é a “capacidade de resfriamento” do ar-condicionado.",
-          "Menos BTU do que precisa → demora pra gelar e gasta mais energia.",
-          "BTU demais → liga e desliga mais, pode ressecar o ar e reduzir eficiência.",
+          "BTU/h mede quanto calor o aparelho consegue remover por hora.",
+          "Pouco BTU: não gela, trabalha no limite e gasta mais.",
+          "Muito BTU: pode ligar/desligar demais (ciclos curtos) e incomodar.",
         ],
-        tip: "Dica: o ideal é dimensionar com folga moderada — nem no limite, nem exagerado.",
-      },
-      {
-        id: "como-funciona",
-        title: "Como o ar-condicionado funciona?",
-        subtitle: "Ele não “cria frio”: ele tira calor do ambiente e joga pra fora.",
-        icon: <Snowflake className="h-5 w-5" />,
-        bullets: [
-          "Evaporadora (interna) absorve o calor do ar do cômodo.",
-          "Condensadora (externa) libera esse calor pro lado de fora.",
-          "O gás refrigerante circula nesse ciclo transportando calor.",
-        ],
-        tip: "Dica: se a condensadora pega sol forte, o aparelho perde desempenho.",
+        footer: "Por isso a calculadora ajuda a acertar no ponto.",
       },
       {
         id: "inverter",
-        title: "Tecnologia Inverter",
-        subtitle: "Mais conforto, menos ruído e consumo mais estável.",
-        icon: <Zap className="h-5 w-5" />,
+        title: "Tecnologia Inverter vale a pena?",
+        subtitle: "Na maioria dos casos, sim: mais conforto e economia.",
+        icon: <Zap className="h-5 w-5 text-emerald-600" />,
         bullets: [
-          "Em vez de ligar/desligar o compressor, ele ajusta a rotação conforme a necessidade.",
-          "Mantém a temperatura mais estável (menos “picos” de frio/calor).",
-          "Tende a economizar energia especialmente em uso contínuo.",
+          "Inverter ajusta a rotação do compressor para manter a temperatura estável.",
+          "Geralmente consome menos energia e faz menos ruído.",
+          "Convencional (On/Off) é mais barato, mas tende a oscilar mais.",
         ],
-        tip: "Dica: inverter costuma valer mais a pena para quem usa muitas horas por dia.",
+        footer: "Se usa todo dia, Inverter costuma compensar mais.",
       },
       {
         id: "condensadoras",
         title: "Tipos de condensadora",
-        subtitle: "O “motor” do sistema — e onde o calor é rejeitado.",
-        icon: <Wind className="h-5 w-5" />,
+        subtitle: "A “unidade externa” que troca calor com o ambiente.",
+        icon: <Wind className="h-5 w-5 text-sky-600" />,
         bullets: [
-          "Convencional (On/Off): mais simples, costuma ser mais barata.",
-          "Inverter: controle mais inteligente, melhor eficiência e conforto.",
-          "Atenção ao local: precisa de ventilação e espaço para “respirar”.",
+          "Hi Wall (mais comum): unidade interna alta na parede + externa do lado de fora.",
+          "Piso-teto/cassete: para ambientes maiores ou comerciais.",
+          "Quanto melhor a ventilação externa, melhor a eficiência.",
         ],
-        tip: "Dica: evite instalar em nicho fechado — isso aumenta temperatura e consumo.",
+        footer: "Evite sol direto e espaço apertado na condensadora.",
       },
       {
-        id: "funcoes-ia",
-        title: "Funções “IA” e conectividade",
-        subtitle: "Recursos que ajudam no conforto — mas não substituem o dimensionamento.",
-        icon: <Sparkles className="h-5 w-5" />,
+        id: "ia",
+        title: "Funções “IA” e automação",
+        subtitle: "Geralmente são modos inteligentes e sensores.",
+        icon: <BrainCircuit className="h-5 w-5 text-violet-600" />,
         bullets: [
-          "Alguns modelos aprendem seu padrão de uso e ajustam o funcionamento.",
-          "Controle por app/voz (Wi-Fi) facilita rotina e economia.",
-          "Sensores podem melhorar a distribuição do ar e reduzir desperdício.",
+          "Ajuste automático de potência para chegar mais rápido na temperatura.",
+          "Sensores de presença/temperatura para otimizar consumo.",
+          "Apps/Wi-Fi: rotinas, timer, controle remoto e alertas.",
         ],
-        tip: "Dica: primeiro escolha o BTU certo, depois compare recursos “smart”.",
+        footer: "Ótimo para praticidade — mas o BTU correto continua sendo o principal.",
       },
       {
         id: "instalacao",
-        title: "O que é necessário para instalar?",
-        subtitle: "Uma instalação bem feita = mais eficiência e menos dor de cabeça.",
-        icon: <PlugZap className="h-5 w-5" />,
+        title: "O que precisa para instalar?",
+        subtitle: "Instalação bem feita = conforto + economia + durabilidade.",
+        icon: <Home className="h-5 w-5 text-slate-700" />,
         bullets: [
-          "Disjuntor adequado e cabo dimensionado (segurança em 1º lugar).",
-          "Tubulação e isolamento corretos (evita perda e condensação).",
-          "Vácuo na linha e teste de estanqueidade (evita problemas futuros).",
+          "Local certo (boa circulação) e tubulação com comprimento adequado.",
+          "Vácuo na linha e teste de estanqueidade (evita perda de desempenho).",
+          "Disjuntor/cabos corretos e dreno bem instalado.",
         ],
-        tip: "Dica: instalação ruim pode causar consumo alto e até travar o compressor.",
+        footer: "Se possível, use instalador qualificado (faz diferença real).",
       },
       {
         id: "manutencao",
-        title: "Manutenção básica (simples e efetiva)",
-        subtitle: "Ajuda a economizar e melhora a qualidade do ar.",
-        icon: <Wrench className="h-5 w-5" />,
+        title: "Manutenção simples (que salva sua conta de luz)",
+        subtitle: "Poucos minutos por mês já fazem diferença.",
+        icon: <Wrench className="h-5 w-5 text-amber-600" />,
         bullets: [
-          "Limpe filtros 1x por mês (ou mais se tiver poeira/pets).",
-          "Evite obstruir a saída de ar (cortinas/móveis na frente).",
-          "Higienização periódica e checagem técnica aumentam vida útil.",
+          "Limpe os filtros a cada 30 dias (ou menos se tiver poeira/pets).",
+          "Mantenha a unidade externa livre de sujeira e com espaço para ventilar.",
+          "Se notar cheiro forte/goteira/ruído, chame assistência antes de piorar.",
         ],
-        tip: "Dica: filtro sujo derruba o desempenho e aumenta a conta de luz.",
-      },
-      {
-        id: "seguranca",
-        title: "Boas práticas e segurança",
-        subtitle: "Escolha consciente e uso correto fazem toda a diferença.",
-        icon: <ShieldCheck className="h-5 w-5" />,
-        bullets: [
-          "Temperatura recomendada: 23–24°C (conforto + economia).",
-          "Feche portas/janelas durante o uso para não “perder” o ar frio.",
-          "Se possível, reduza sol direto no ambiente (cortinas/insulfilm).",
-        ],
-        tip: "Dica: um ambiente bem vedado pode permitir BTU menor e maior economia.",
+        footer: "Filtro sujo = menos ar = mais consumo e menos conforto.",
       },
     ],
     []
   );
 
   const [index, setIndex] = useState(0);
-  const timerRef = useRef<number | null>(null);
 
-  const goTo = (i: number) => {
-    const next = (i + slides.length) % slides.length;
-    setIndex(next);
-  };
-
-  const next = () => goTo(index + 1);
-  const prev = () => goTo(index - 1);
-
-  const resetAutoplay = () => {
-    if (timerRef.current) window.clearInterval(timerRef.current);
-    timerRef.current = window.setInterval(() => {
-      setIndex((v) => (v + 1) % slides.length);
-    }, AUTOPLAY_MS);
-  };
+  const prev = () => setIndex((i) => (i - 1 + slides.length) % slides.length);
+  const next = () => setIndex((i) => (i + 1) % slides.length);
 
   useEffect(() => {
-    resetAutoplay();
-    return () => {
-      if (timerRef.current) window.clearInterval(timerRef.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const t = window.setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, AUTOPLAY_MS);
+
+    return () => window.clearInterval(t);
   }, [slides.length]);
 
-  // reinicia autoplay quando o usuário navega manualmente
-  useEffect(() => {
-    resetAutoplay();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index]);
-
-  const current = slides[index];
+  const active = slides[index];
 
   return (
-    <section className="py-10">
-      <div className="bg-white/70 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm overflow-hidden">
-        {/* Header */}
-        <div className="px-6 pt-6 pb-4 border-b border-gray-100">
+    <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-10">
+      {/* Header */}
+      <div className="flex items-end justify-between gap-4 mb-6">
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1B3C87]">
+            Dicas rápidas e fáceis
+          </h2>
+          <p className="text-gray-600 mt-1">
+            Aprenda o essencial em poucos segundos (passa sozinho a cada 30s).
+          </p>
+        </div>
+
+        {/* Dots */}
+        <div className="hidden md:flex items-center gap-2">
+          {slides.map((s, i) => (
+            <button
+              key={s.id}
+              onClick={() => setIndex(i)}
+              className={[
+                "h-2.5 rounded-full transition-all",
+                i === index ? "w-8 bg-[#1B3C87]" : "w-2.5 bg-gray-300 hover:bg-gray-400",
+              ].join(" ")}
+              aria-label={`Ir para: ${s.title}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Carousel Card */}
+      <div className="relative overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-blue-100/60 blur-2xl" />
+          <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-full bg-indigo-100/60 blur-2xl" />
+        </div>
+
+        <div className="relative p-6 sm:p-8">
           <div className="flex items-start justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-extrabold text-[#1B3C87]">
-                Guia Rápido do Ar-Condicionado
-              </h2>
-              <p className="text-sm text-gray-600 mt-1">
-                Aprenda o essencial em cards curtos (troca automática a cada 30s).
-              </p>
+            <div className="flex items-center gap-3">
+              <div className="h-11 w-11 rounded-2xl bg-white/80 border border-gray-100 flex items-center justify-center shadow-sm">
+                {active.icon}
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-blue-700">
+                  {index + 1}/{slides.length}
+                </div>
+                <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 leading-tight">
+                  {active.title}
+                </h3>
+              </div>
             </div>
 
-            <div className="hidden sm:flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <button
                 onClick={prev}
-                className="w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 active:scale-95 transition flex items-center justify-center"
+                className="h-10 w-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center"
                 aria-label="Anterior"
-                type="button"
               >
-                <ChevronLeft className="h-5 w-5 text-gray-600" />
+                <ChevronLeft className="h-5 w-5 text-gray-700" />
               </button>
               <button
                 onClick={next}
-                className="w-10 h-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 active:scale-95 transition flex items-center justify-center"
+                className="h-10 w-10 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 flex items-center justify-center"
                 aria-label="Próximo"
-                type="button"
               >
-                <ChevronRight className="h-5 w-5 text-gray-600" />
+                <ChevronRight className="h-5 w-5 text-gray-700" />
               </button>
             </div>
           </div>
 
-          {/* Dots */}
-          <div className="mt-4 flex items-center gap-2 flex-wrap">
+          <p className="mt-3 text-gray-600">{active.subtitle}</p>
+
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+            {active.bullets.map((b, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-gray-100 bg-white/70 p-4 shadow-[0_1px_0_rgba(0,0,0,0.03)]"
+              >
+                <div className="text-sm text-gray-700 leading-relaxed">{b}</div>
+              </div>
+            ))}
+          </div>
+
+          {active.footer && (
+            <div className="mt-6 rounded-2xl bg-blue-50/60 border border-blue-100 p-4">
+              <div className="text-sm font-semibold text-blue-900">Resumo</div>
+              <div className="text-sm text-blue-900/80 mt-1">{active.footer}</div>
+            </div>
+          )}
+
+          {/* Mobile dots */}
+          <div className="mt-6 flex md:hidden items-center justify-center gap-2">
             {slides.map((s, i) => (
               <button
                 key={s.id}
-                onClick={() => goTo(i)}
-                type="button"
-                className={`h-2.5 rounded-full transition-all ${
-                  i === index ? "w-8 bg-[#1B3C87]" : "w-2.5 bg-gray-200 hover:bg-gray-300"
-                }`}
+                onClick={() => setIndex(i)}
+                className={[
+                  "h-2.5 rounded-full transition-all",
+                  i === index ? "w-8 bg-[#1B3C87]" : "w-2.5 bg-gray-300 hover:bg-gray-400",
+                ].join(" ")}
                 aria-label={`Ir para: ${s.title}`}
               />
             ))}
           </div>
         </div>
-
-        {/* Slide */}
-        <div className="p-6">
-          <div className="relative">
-            {/* Glow */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 rounded-3xl blur opacity-30 pointer-events-none" />
-
-            <div className="relative bg-white rounded-2xl border border-gray-100 shadow-md p-6">
-              <div className="flex items-start gap-4">
-                <div className="shrink-0">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-100 to-blue-50 border border-blue-100 text-[#1B3C87] flex items-center justify-center shadow-sm">
-                    {current.icon}
-                  </div>
-                </div>
-
-                <div className="min-w-0">
-                  <h3 className="text-xl font-extrabold text-gray-900">
-                    {current.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-1">{current.subtitle}</p>
-
-                  <ul className="mt-4 space-y-2">
-                    {current.bullets.map((b, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                        <span className="mt-1 h-2 w-2 rounded-full bg-blue-500 shrink-0" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {current.tip && (
-                    <div className="mt-5 flex items-start gap-2 rounded-xl bg-blue-50 border border-blue-100 p-4">
-                      <Info className="h-4 w-4 text-blue-700 mt-0.5 shrink-0" />
-                      <p className="text-sm text-blue-900">
-                        <span className="font-semibold">Atalho prático: </span>
-                        {current.tip}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Mobile nav */}
-                  <div className="mt-6 flex sm:hidden items-center justify-between gap-3">
-                    <button
-                      onClick={prev}
-                      className="flex-1 py-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 active:scale-[0.99] transition flex items-center justify-center gap-2 font-semibold text-gray-700"
-                      type="button"
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                      Anterior
-                    </button>
-                    <button
-                      onClick={next}
-                      className="flex-1 py-3 rounded-xl bg-[#1B3C87] hover:bg-blue-800 text-white active:scale-[0.99] transition flex items-center justify-center gap-2 font-semibold shadow-sm"
-                      type="button"
-                    >
-                      Próximo
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                  </div>
-
-                  {/* Autoplay hint */}
-                  <p className="mt-4 text-[11px] text-gray-400 flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                      Auto-carrossel: 30s
-                    </span>
-                    <span className="hidden sm:inline">•</span>
-                    <span className="hidden sm:inline">
-                      Você pode clicar nas bolinhas para ir direto ao tema
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer small CTA */}
-        <div className="px-6 pb-6">
-          <div className="rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-blue-50 p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-              <p className="font-bold text-gray-900">Quer acertar de primeira?</p>
-              <p className="text-sm text-gray-600">
-                Use a calculadora acima e depois compare as ofertas recomendadas.
-              </p>
-            </div>
-            <div className="text-sm font-semibold text-[#1B3C87] flex items-center gap-2">
-              <Zap className="h-4 w-4" />
-              Mais conforto, menos gasto
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
-};
-
-export default InfoHub;
-=======
-import React from 'react';
-import { Leaf, DollarSign, Wind, CheckCircle2 } from 'lucide-react';
-
-const InfoHub: React.FC = () => {
-  return (
-    <div className="space-y-12 py-10">
-      
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
-            <Leaf className="text-green-600" />
-          </div>
-          <h3 className="text-xl font-bold mb-2">Inverter vs. Convencional</h3>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Modelos <strong>Inverter</strong> ajustam a velocidade do compressor, economizando até 60% de energia e sendo mais silenciosos. O Convencional (On/Off) é mais barato na compra, mas gasta mais luz pois liga e desliga o motor constantemente.
-          </p>
-        </div>
-
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-            <DollarSign className="text-blue-600" />
-          </div>
-          <h3 className="text-xl font-bold mb-2">Como Economizar Energia</h3>
-          <ul className="text-gray-600 text-sm space-y-2">
-            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="mt-1 text-blue-500" /> Mantenha filtros limpos mensalmente.</li>
-            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="mt-1 text-blue-500" /> Configure entre 23ºC e 24ºC.</li>
-            <li className="flex items-start gap-2"><CheckCircle2 size={16} className="mt-1 text-blue-500" /> Evite sol direto na unidade externa.</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* SEO Content */}
-      <article className="prose prose-blue max-w-none text-gray-700">
-        <h2 className="text-2xl font-bold text-[#1B3C87]">Entendendo a Carga Térmica (BTU)</h2>
-        <p>
-          O cálculo de <strong>carga térmica</strong> é essencial para determinar quantos BTUs (British Thermal Units) seu ambiente precisa. Um ar-condicionado subdimensionado não gela e gasta muita energia. Já um superdimensionado liga e desliga muito (ciclos curtos), reduzindo a vida útil e não desumidificando corretamente.
-        </p>
-        <p>
-          Nossa ferramenta utiliza parâmetros da norma para entregar o <em>ar condicionado ideal</em> para seu quarto, sala ou escritório. Fatores como exposição solar, número de eletrônicos e pessoas influenciam diretamente no resultado final.
-        </p>
-      </article>
-
-      {/* Ad Placeholder */}
-      <div className="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 border-2 border-dashed border-gray-300">
-        <span>Espaço para Google AdSense / Banner Publicitário</span>
-      </div>
-    </div>
-  );
-};
-
-export default InfoHub;
->>>>>>> f02f9b026814d6f3e9d3f5c591063081409a2f71
+}

@@ -1,9 +1,9 @@
 import { ProductRecommendation } from "../../types";
 
 export const affiliateProducts: ProductRecommendation[] = [
-  // =========================
+  // 
   // 9.000 BTU/h
-  // =========================
+  // 
   {
     id: "9000-lg-dual-inverter-voice",
     btu: 9000,
@@ -45,9 +45,9 @@ export const affiliateProducts: ProductRecommendation[] = [
     highlights: ["Boa escolha pro seu BTU", "Mais conforto no fluxo", "Clique e compare o preço"]
   },
 
-  // =========================
+  // 
   // 12.000 BTU/h
-  // =========================
+  // 
   {
     id: "12000-daikin-ecoswing-r32",
     btu: 12000,
@@ -89,9 +89,9 @@ export const affiliateProducts: ProductRecommendation[] = [
     highlights: ["Boa escolha pro seu BTU", "Inverter econômico", "Clique e compare o preço"]
   },
 
-  // =========================
+  // 
   // 18.000 BTU/h
-  // =========================
+  // 
   {
     id: "18000-lg-dual-inverter-voice",
     btu: 18000,
@@ -133,9 +133,9 @@ export const affiliateProducts: ProductRecommendation[] = [
     highlights: ["Boa escolha pro seu BTU", "Inverter econômico", "Clique e compare o preço"]
   },
 
-  // =========================
+  // 
   // 24.000 BTU/h
-  // =========================
+  // 
   {
     id: "24000-samsung-windfree",
     btu: 24000,
@@ -177,9 +177,9 @@ export const affiliateProducts: ProductRecommendation[] = [
     highlights: ["Boa escolha pro seu BTU", "Alta eficiência", "Clique e compare o preço"]
   },
 
-  // =========================
+  // 
   // 30.000 BTU/h
-  // =========================
+  // 
   {
     id: "30000-lg-artcool",
     btu: 30000,
